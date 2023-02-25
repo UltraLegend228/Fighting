@@ -63,12 +63,12 @@ class Player1(pygame.sprite.Sprite):
             self.anime_atk = True
             self.flag_damage = True
         elif key[pygame.K_d]:
-            self.rect.x += 2
+            self.rect.x += 5
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
         elif key[pygame.K_a]:
-            self.rect.x -= 2
+            self.rect.x -= 5
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
@@ -191,12 +191,12 @@ class Player2(pygame.sprite.Sprite):
             self.anime_atk = True
             self.flag_damage = True
         elif key[pygame.K_RIGHT]:
-            self.rect.x += 2
+            self.rect.x += 5
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
         elif key[pygame.K_LEFT]:
-            self.rect.x -= 2
+            self.rect.x -= 5
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
