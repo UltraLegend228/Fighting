@@ -30,10 +30,10 @@ player2_idle_image = [pygame.image.load("image/1.png").convert_alpha(),
                       pygame.image.load("image/2.png").convert_alpha(),
                       pygame.image.load("image/3.png").convert_alpha(),
                       pygame.image.load("image/4.png").convert_alpha()]
-player2_run_image = [pygame.image.load("image/1 run.png").convert_alpha(),
-                     pygame.image.load("image/2 run.png").convert_alpha(),
-                     pygame.image.load("image/3 run.png").convert_alpha(),
-                     pygame.image.load("image/4 run.png").convert_alpha()]
+player2_run_image = [pygame.image.load("image/player 2/run/1.png").convert_alpha(),
+                     pygame.image.load("image/player 2/run/2.png").convert_alpha(),
+                     pygame.image.load("image/player 2/run/3.png").convert_alpha(),
+                     pygame.image.load("image/player 2/run/4.png").convert_alpha()]
 player2_atk_image = [pygame.image.load("image/player 2/attack/1.png").convert_alpha(),
                      pygame.image.load("image/player 2/attack/2.png").convert_alpha(),
                      pygame.image.load("image/player 2/attack/3.png").convert_alpha(),
