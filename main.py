@@ -21,7 +21,7 @@ from load import *
 
 
 def startMenu():
-    global lvl, records_list
+    global lvl
     sc.blit(menu_image, (0, 0))
     sc.blit(start_image, (100, 100))
     sc.blit(aizen_menu_image, (600, 200))
@@ -79,6 +79,7 @@ class Player1(pygame.sprite.Sprite):
         self.flag_damage = False
         self.hp_bar = "blue"
         self.mask_list = []
+        self.ulta = 0
 
 
     def update(self):
@@ -173,7 +174,8 @@ class Player1(pygame.sprite.Sprite):
             self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
         if len(set(self.mask_list) & set(player2.mask_list)) > 0:
             if self.anime_atk and self.flag_damage:
-                player2.hp -= 10
+                player2.hp -= 3
+                self.ulta += 5
                 self.flag_damage = False
         #for point in self.mask_list:
         #    x = point[0]
@@ -182,6 +184,11 @@ class Player1(pygame.sprite.Sprite):
 
 
         pygame.draw.rect(sc, self.hp_bar, (0, 0, 600 * self.hp / 100, 50))
+
+        if self.ulta < 75:
+            pygame.draw.rect(sc, (0, 191, 255), (0, 50, 2 * self.ulta, 30))
+        elif self.ulta >= 75:
+            pygame.draw.rect(sc, (0, 191, 255), (0, 50, 150, 30))
 
 
 
@@ -206,6 +213,7 @@ class Player2(pygame.sprite.Sprite):
         self.flag_damage = False
         self.hp_bar = "red"
         self.mask_list = []
+        self.ulta = 0
 
 
     def update(self):
@@ -302,7 +310,8 @@ class Player2(pygame.sprite.Sprite):
             self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
         if len(set(self.mask_list) & set(player1.mask_list)) > 0:
             if self.anime_atk and self.flag_damage:
-                player1.hp -= 10
+                player1.hp -= 3
+                self.ulta += 5
                 self.flag_damage = False
         #for point in self.mask_list:
         #    x = point[0]
@@ -311,6 +320,10 @@ class Player2(pygame.sprite.Sprite):
 
 
         pygame.draw.rect(sc, self.hp_bar, (600 + (600 - self.hp * 6), 0, 600, 50))
+        if self.ulta < 75:
+            pygame.draw.rect(sc, (205, 92, 92), (200 + (1000 - 2 * self.ulta), 50, 600, 30))
+        elif self.ulta >= 75:
+            pygame.draw.rect(sc, (205, 92, 92), (1050, 50, 600, 30))
 
 
 class FON:
