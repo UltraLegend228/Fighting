@@ -14,6 +14,8 @@ FPS=60
 sc=pygame.display.set_mode((WIDTH, HEIGHT))
 clock=pygame.time.Clock()
 lvl = "menu"
+pygame.mixer.music.load('bankai-ep365.mp3')
+pygame.mixer.music.play(1)
 
 
 from load import *
@@ -324,6 +326,9 @@ class Player2(pygame.sprite.Sprite):
             pygame.draw.rect(sc, (205, 92, 92), (200 + (1000 - 2 * self.ulta), 50, 600, 30))
         elif self.ulta >= 75:
             pygame.draw.rect(sc, (205, 92, 92), (1050, 50, 600, 30))
+
+        if self.hp <= 0:
+            self.kill()
 
 
 class FON:
