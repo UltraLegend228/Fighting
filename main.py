@@ -13,9 +13,39 @@ FPS=60
 #pygame.mixer.music.play(-1)
 sc=pygame.display.set_mode((WIDTH, HEIGHT))
 clock=pygame.time.Clock()
+lvl = "menu"
 
 
 from load import *
+
+
+
+def startMenu():
+    global lvl, records_list
+    sc.blit(menu_image, (0, 0))
+    sc.blit(start_image, (100, 100))
+    sc.blit(aizen_menu_image, (600, 200))
+    sc.blit(bleach_image, (500, -100))
+    #sc.blit(records_image, (100, 300))
+    #sc.blit(exit_image, (100, 400))
+    pos_mouse=pygame.mouse.get_pos()
+    if pygame.mouse.get_pressed()[0]:
+        if 100<pos_mouse[0]<400:
+            if 100<pos_mouse[1]<175:
+                restart()
+                lvl="Game"
+            #elif 300<pos_mouse[1]<375:
+            #    lvl="score"
+            #    with open("score.txt", "r", encoding="utf-8") as file:
+            #        records_list = []
+            #        for i in range(5):
+            #            records_list.append(file.readline().replace("\n", ""))
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+    pygame.display.update()
+
 
 
 def game_lvl():
@@ -317,5 +347,8 @@ while True:
         if event.type==pygame.QUIT:
             pygame.quit()
             sys.exit()
-    game_lvl()
+    if lvl == "Game":
+        game_lvl()
+    elif lvl == "menu":
+        startMenu()
     clock.tick(FPS)

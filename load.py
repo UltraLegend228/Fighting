@@ -44,3 +44,8 @@ bg_image = [pygame.image.load("image/fon/1.jpg").convert_alpha(),
             pygame.image.load("image/fon/6.jpg").convert_alpha(),
             pygame.image.load("image/fon/7.jpg").convert_alpha(),
             pygame.image.load("image/fon/8.jpg").convert_alpha()]
+
+menu_image = pygame.image.load("image/menu.png").convert_alpha()
+start_image = pygame.image.load("image/start.png").convert_alpha()
+aizen_menu_image = pygame.image.load("image/aizen menu.png").convert_alpha()
+bleach_image = pygame.image.load("image/bleach.png").convert_alpha()
