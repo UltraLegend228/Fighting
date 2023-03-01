@@ -36,6 +36,16 @@ player1_atk_image = [pygame.image.load("image/1 atk.png").convert_alpha(),
                      pygame.image.load("image/4 atk.png").convert_alpha(),
                      pygame.image.load("image/5 atk.png").convert_alpha(),
                      pygame.image.load("image/6 atk.png").convert_alpha()]
+player1_ult_image = [pygame.image.load("image/1 ult.png").convert_alpha(),
+                     pygame.image.load("image/2 ult.png").convert_alpha(),
+                     pygame.image.load("image/3 ult.png").convert_alpha(),
+                     pygame.image.load("image/4 ult.png").convert_alpha(),
+                     pygame.image.load("image/5 ult.png").convert_alpha(),
+                     pygame.image.load("image/6 ult.png").convert_alpha()]
+                     #pygame.image.load("image/7 ult.png").convert_alpha(),
+                     #pygame.image.load("image/8 ult.png").convert_alpha(),
+                     #pygame.image.load("image/9 ult.png").convert_alpha(),
+                     #pygame.image.load("image/10 ult.png").convert_alpha()]
 bg_image = [pygame.image.load("image/fon/1.jpg").convert_alpha(),
             pygame.image.load("image/fon/2.jpg").convert_alpha(),
             pygame.image.load("image/fon/3.jpg").convert_alpha(),

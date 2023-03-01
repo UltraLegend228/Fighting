@@ -14,6 +14,8 @@ clock=pygame.time.Clock()
 lvl = "menu"
 pygame.mixer.music.load('bankai-ep365.mp3')
 pygame.mixer.music.play(0)
+pygame.display.set_mode((1200, 600))
+
 
 
 from load import *
@@ -74,6 +76,7 @@ class Player1(pygame.sprite.Sprite):
         self.anime_idle = True
         self.anime_run = False
         self.anime_atk = False
+        self.anime_ult = False
         self.dir = "right"
         self.hp = 100
         self.flag_damage = False
@@ -92,6 +95,13 @@ class Player1(pygame.sprite.Sprite):
             self.anime_idle = False
             self.anime_run = False
             self.anime_atk = True
+            self.flag_damage = True
+        if key[pygame.K_s] and self.ulta >= 75 and not self.anime_ult:
+            self.frame = 0
+            self.anime_idle = False
+            self.anime_run = False
+            self.anime_atk = False
+            self.anime_ult = True
             self.flag_damage = True
         elif key[pygame.K_d]:
             self.rect.x += 3
@@ -157,6 +167,21 @@ class Player1(pygame.sprite.Sprite):
             except:
                 self.frame = 0
 
+        if self.anime_ult:
+            self.timer_anime += 1
+            if self.timer_anime / FPS > 0.1:
+                if self.frame == len(player1_ult_image) - 1:
+                    self.frame = 0
+                    if self.anime_atk:
+                        self.anime_atk = False
+                        self.anime_ult = True
+                else:
+                    self.frame += 1
+                self.timer_anime = 0
+            try:
+                self.image = player1_ult_image[self.frame]
+            except:
+                self.frame = 0
 
         if self.jump:
             if self.jump_step <= 22:
