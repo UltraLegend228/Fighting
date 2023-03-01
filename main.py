@@ -9,13 +9,11 @@ os.chdir(current_path)
 WIDTH=1200
 HEIGHT=600
 FPS=60
-#pygame.mixer.music.load('sound/mario.mp3')
-#pygame.mixer.music.play(-1)
 sc=pygame.display.set_mode((WIDTH, HEIGHT))
 clock=pygame.time.Clock()
 lvl = "menu"
 pygame.mixer.music.load('bankai-ep365.mp3')
-pygame.mixer.music.play(1)
+pygame.mixer.music.play(0)
 
 
 from load import *
@@ -96,12 +94,12 @@ class Player1(pygame.sprite.Sprite):
             self.anime_atk = True
             self.flag_damage = True
         elif key[pygame.K_d]:
-            self.rect.x += 5
+            self.rect.x += 3
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
         elif key[pygame.K_a]:
-            self.rect.x -= 5
+            self.rect.x -= 3
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
@@ -176,7 +174,7 @@ class Player1(pygame.sprite.Sprite):
             self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
         if len(set(self.mask_list) & set(player2.mask_list)) > 0:
             if self.anime_atk and self.flag_damage:
-                player2.hp -= 3
+                player2.hp -= 5
                 self.ulta += 5
                 self.flag_damage = False
         #for point in self.mask_list:
@@ -191,6 +189,25 @@ class Player1(pygame.sprite.Sprite):
             pygame.draw.rect(sc, (0, 191, 255), (0, 50, 2 * self.ulta, 30))
         elif self.ulta >= 75:
             pygame.draw.rect(sc, (0, 191, 255), (0, 50, 150, 30))
+            sc.blit(BANKAI_image, (65, 55))
+            #bankai_aizen = pygame.mixer.Sound('aizen-bankai.wav')
+            #bankai_aizen.play(0)
+
+        if self.hp <= 0:
+            self.kill()
+
+        if self.rect.center[0] - player2.rect.center[0] < 0:
+            self.dir = "right"
+        else:
+            self.dir = "left"
+
+        try:
+            if self.dir == "right":
+                self.image = self.image
+            else:
+                self.image = pygame.transform.flip(self.image, True, False)
+        except:
+            self.frame = 0
 
 
 
@@ -231,12 +248,12 @@ class Player2(pygame.sprite.Sprite):
             self.anime_atk = True
             self.flag_damage = True
         elif key[pygame.K_RIGHT]:
-            self.rect.x += 5
+            self.rect.x += 7
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
         elif key[pygame.K_LEFT]:
-            self.rect.x -= 5
+            self.rect.x -= 7
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
@@ -312,7 +329,7 @@ class Player2(pygame.sprite.Sprite):
             self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
         if len(set(self.mask_list) & set(player1.mask_list)) > 0:
             if self.anime_atk and self.flag_damage:
-                player1.hp -= 3
+                player1.hp -= 2
                 self.ulta += 5
                 self.flag_damage = False
         #for point in self.mask_list:
@@ -329,6 +346,19 @@ class Player2(pygame.sprite.Sprite):
 
         if self.hp <= 0:
             self.kill()
+
+        if self.rect.center[0] - player1.rect.center[0] < 0:
+            self.dir = "right"
+        else:
+            self.dir = "left"
+
+        try:
+            if self.dir == "right":
+                self.image = self.image
+            else:
+                self.image = pygame.transform.flip(self.image, True, False)
+        except:
+            self.frame = 0
 
 
 class FON:
