@@ -31,11 +31,15 @@ def startMenu():
     #sc.blit(records_image, (100, 300))
     #sc.blit(exit_image, (100, 400))
     pos_mouse=pygame.mouse.get_pos()
+    if 100 < pos_mouse[0] < 400:
+        if 100 < pos_mouse[1] < 175:
+            sc.blit(start2_image, (100, 100))
     if pygame.mouse.get_pressed()[0]:
         if 100<pos_mouse[0]<400:
             if 100<pos_mouse[1]<175:
                 restart()
                 lvl="Game"
+
             #elif 300<pos_mouse[1]<375:
             #    lvl="score"
             #    with open("score.txt", "r", encoding="utf-8") as file:
@@ -82,7 +86,7 @@ class Player1(pygame.sprite.Sprite):
         self.flag_damage = False
         self.hp_bar = "blue"
         self.mask_list = []
-        self.ulta = 0
+        self.ulta = 75
 
 
     def update(self):
@@ -114,7 +118,7 @@ class Player1(pygame.sprite.Sprite):
             if not self.anime_atk:
                 self.anime_run = True
         else:
-            if not self.anime_atk:
+            if not self.anime_atk and not self.anime_ult:
                 self.anime_idle = True
             self.anime_run = False
 
@@ -172,9 +176,8 @@ class Player1(pygame.sprite.Sprite):
             if self.timer_anime / FPS > 0.1:
                 if self.frame == len(player1_ult_image) - 1:
                     self.frame = 0
-                    if self.anime_atk:
-                        self.anime_atk = False
-                        self.anime_ult = True
+                    self.anime_ult = False
+                    self.ulta = 0
                 else:
                     self.frame += 1
                 self.timer_anime = 0
@@ -233,6 +236,9 @@ class Player1(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(self.image, True, False)
         except:
             self.frame = 0
+
+        if self.ulta < 75:
+            self.anime_ult = False
 
 
 

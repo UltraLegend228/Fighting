@@ -41,11 +41,11 @@ player1_ult_image = [pygame.image.load("image/1 ult.png").convert_alpha(),
                      pygame.image.load("image/3 ult.png").convert_alpha(),
                      pygame.image.load("image/4 ult.png").convert_alpha(),
                      pygame.image.load("image/5 ult.png").convert_alpha(),
-                     pygame.image.load("image/6 ult.png").convert_alpha()]
-                     #pygame.image.load("image/7 ult.png").convert_alpha(),
-                     #pygame.image.load("image/8 ult.png").convert_alpha(),
-                     #pygame.image.load("image/9 ult.png").convert_alpha(),
-                     #pygame.image.load("image/10 ult.png").convert_alpha()]
+                     pygame.image.load("image/6 ult.png").convert_alpha(),
+                     pygame.image.load("image/7 ult.png").convert_alpha(),
+                     pygame.image.load("image/8 ult.png").convert_alpha(),
+                     pygame.image.load("image/9 ult.png").convert_alpha(),
+                     pygame.image.load("image/10 ult.png").convert_alpha()]
 bg_image = [pygame.image.load("image/fon/1.jpg").convert_alpha(),
             pygame.image.load("image/fon/2.jpg").convert_alpha(),
             pygame.image.load("image/fon/3.jpg").convert_alpha(),
@@ -55,8 +55,9 @@ bg_image = [pygame.image.load("image/fon/1.jpg").convert_alpha(),
             pygame.image.load("image/fon/7.jpg").convert_alpha(),
             pygame.image.load("image/fon/8.jpg").convert_alpha()]
 
-menu_image = pygame.image.load("image/menu.png").convert_alpha()
+menu_image = pygame.image.load("image/menu.jpg").convert_alpha()
 start_image = pygame.image.load("image/start.png").convert_alpha()
+start2_image = pygame.image.load("image/start 2.png").convert_alpha()
 aizen_menu_image = pygame.image.load("image/aizen menu.png").convert_alpha()
 bleach_image = pygame.image.load("image/bleach.png").convert_alpha()
 BANKAI_image = pygame.image.load("image/BANKAI 2.png").convert_alpha()
