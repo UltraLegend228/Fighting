@@ -277,6 +277,10 @@ class Player1(pygame.sprite.Sprite):
             except:
                 self.frame = 0
 
+        if self.form:
+            key = pygame.key.get_pressed()
+            if key[pygame.K_e]:
+                sc.blit(korobka_image, player2.rect)
 
 class Player2(pygame.sprite.Sprite):
     def __init__(self, image, pos):
