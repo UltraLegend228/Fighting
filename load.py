@@ -24,6 +24,9 @@ player1_idle_image = [pygame.image.load("image/aizen/1.png").convert_alpha(),
                       pygame.image.load("image/aizen/2.png").convert_alpha(),
                       pygame.image.load("image/aizen/3.png").convert_alpha(),
                       pygame.image.load("image/aizen/4.png").convert_alpha()]
+
+player1_form_image = [pygame.image.load("image/aizen/1 form.png"),                      pygame.image.load("image/aizen/2 form.png"),
+                      pygame.image.load("image/aizen/3 form.png"),                      pygame.image.load("image/aizen/4 form.png")]
 player1_run_image = [pygame.image.load("image/aizen/1 run.png").convert_alpha(),
                      pygame.image.load("image/aizen/2 run.png").convert_alpha(),
                      pygame.image.load("image/aizen/3 run.png").convert_alpha(),
@@ -46,10 +49,6 @@ player1_ult_image = [pygame.image.load("image/aizen/1 ult.png").convert_alpha(),
                      pygame.image.load("image/aizen/8 ult.png").convert_alpha(),
                      pygame.image.load("image/aizen/9 ult.png").convert_alpha(),
                      pygame.image.load("image/aizen/10 ult.png").convert_alpha()]
-player1_form_image = [pygame.image.load("image/aizen/1 form.png"),
-                      pygame.image.load("image/aizen/2 form.png"),
-                      pygame.image.load("image/aizen/3 form.png"),
-                      pygame.image.load("image/aizen/4 form.png")]
 bg_image = [pygame.image.load("image/fon/1.jpg").convert_alpha(),
             pygame.image.load("image/fon/2.jpg").convert_alpha(),
             pygame.image.load("image/fon/3.jpg").convert_alpha(),
