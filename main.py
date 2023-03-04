@@ -81,12 +81,14 @@ class Player1(pygame.sprite.Sprite):
         self.anime_run = False
         self.anime_atk = False
         self.anime_ult = False
+        self.anime_form = False
         self.dir = "right"
         self.hp = 100
         self.flag_damage = False
         self.hp_bar = "blue"
         self.mask_list = []
-        self.ulta = 75
+        self.ulta = 0
+        self.form = False
 
 
     def update(self):
@@ -94,13 +96,13 @@ class Player1(pygame.sprite.Sprite):
         key = pygame.key.get_pressed()
         if key[pygame.K_w]:
             self.jump = True
-        if key[pygame.K_e] and not self.anime_atk:
+        if key[pygame.K_e] and not self.anime_atk and not self.form:
             self.frame = 0
             self.anime_idle = False
             self.anime_run = False
             self.anime_atk = True
             self.flag_damage = True
-        if key[pygame.K_s] and self.ulta >= 75 and not self.anime_ult:
+        if key[pygame.K_s] and self.ulta >= 75 and not self.anime_ult and not self.form:
             self.frame = 0
             self.anime_idle = False
             self.anime_run = False
@@ -108,17 +110,23 @@ class Player1(pygame.sprite.Sprite):
             self.anime_ult = True
             self.flag_damage = True
         elif key[pygame.K_d]:
-            self.rect.x += 3
-            self.anime_idle = False
-            if not self.anime_atk:
-                self.anime_run = True
+            if self.form:
+                self.anime_run = False
+            else:
+                self.rect.x += 4
+                self.anime_idle = False
+                if not self.anime_atk and not self.anime_ult and not self.form:
+                    self.anime_run = True
         elif key[pygame.K_a]:
-            self.rect.x -= 3
-            self.anime_idle = False
-            if not self.anime_atk:
-                self.anime_run = True
+            if self.form:
+                self.anime_run = False
+            else:
+                self.rect.x -= 4
+                self.anime_idle = False
+                if not self.anime_atk and not self.anime_ult and not self.form:
+                    self.anime_run = True
         else:
-            if not self.anime_atk and not self.anime_ult:
+            if not self.anime_atk and not self.anime_ult and not self.form:
                 self.anime_idle = True
             self.anime_run = False
 
@@ -177,7 +185,7 @@ class Player1(pygame.sprite.Sprite):
                 if self.frame == len(player1_ult_image) - 1:
                     self.frame = 0
                     self.anime_ult = False
-                    self.ulta = 0
+                    self.form = True
                 else:
                     self.frame += 1
                 self.timer_anime = 0
@@ -240,6 +248,24 @@ class Player1(pygame.sprite.Sprite):
         if self.ulta < 75:
             self.anime_ult = False
 
+        if self.form:
+            self.anime_idle = False
+            self.anime_run = False
+            self.anime_atk = False
+            self.anime_ult = False
+            self.anime_form = True
+            self.timer_anime += 1
+            if self.timer_anime / FPS > 0.1:
+                if self.frame == len(player1_form_image) - 1:
+                    self.frame = 0
+
+                else:
+                    self.frame += 1
+                self.timer_anime = 0
+            try:
+                self.image = player1_form_image[self.frame]
+            except:
+                self.frame = 0
 
 
 class Player2(pygame.sprite.Sprite):
@@ -279,12 +305,12 @@ class Player2(pygame.sprite.Sprite):
             self.anime_atk = True
             self.flag_damage = True
         elif key[pygame.K_RIGHT]:
-            self.rect.x += 7
+            self.rect.x += 6
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
         elif key[pygame.K_LEFT]:
-            self.rect.x -= 7
+            self.rect.x -= 6
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
