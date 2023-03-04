@@ -28,17 +28,27 @@ def startMenu():
     sc.blit(start_image, (100, 100))
     sc.blit(aizen_menu_image, (600, 200))
     sc.blit(bleach_image, (500, -100))
+    sc.blit(help_image, (100, 400))
     #sc.blit(records_image, (100, 300))
     #sc.blit(exit_image, (100, 400))
     pos_mouse=pygame.mouse.get_pos()
     if 100 < pos_mouse[0] < 400:
         if 100 < pos_mouse[1] < 175:
             sc.blit(start2_image, (100, 100))
+    pos_mouse = pygame.mouse.get_pos()
+    if 100 < pos_mouse[0] < 400:
+        if 400 < pos_mouse[1] < 475:
+            sc.blit(help2_image, (100, 400))
     if pygame.mouse.get_pressed()[0]:
         if 100<pos_mouse[0]<400:
             if 100<pos_mouse[1]<175:
                 restart()
                 lvl="Game"
+    if pygame.mouse.get_pressed()[0]:
+        if 100 < pos_mouse[0] < 400:
+            if 400 < pos_mouse[1] < 475:
+                restart()
+                lvl = "Help"
 
             #elif 300<pos_mouse[1]<375:
             #    lvl="score"
@@ -434,6 +444,10 @@ class FON:
                 self.frame += 1
             self.timer = 0
 
+def help():
+    sc.fill("grey")
+    pygame.display.update()
+
 
 def restart():
     global fon, player1, player1_group, player2, player2_group
@@ -456,4 +470,6 @@ while True:
         game_lvl()
     elif lvl == "menu":
         startMenu()
+    elif lvl == "Help":
+        help()
     clock.tick(FPS)
