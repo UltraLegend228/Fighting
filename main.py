@@ -12,8 +12,10 @@ FPS=60
 sc=pygame.display.set_mode((WIDTH, HEIGHT))
 clock=pygame.time.Clock()
 lvl = "menu"
-pygame.mixer.music.load('aizen-bankai.mp3')
-pygame.mixer.music.play(0)
+#pygame.mixer.music.load('aizen-bankai.mp3')
+#pygame.mixer.music.play(0)
+aizen_music = pygame.mixer.Sound('aizen-bankai.wav')
+byakuya_music = pygame.mixer.Sound('byakuya-bankai.wav')
 pygame.display.set_mode((1200, 600))
 
 
@@ -99,7 +101,7 @@ class Player1(pygame.sprite.Sprite):
         self.flag_damage = False
         self.hp_bar = "blue"
         self.mask_list = []
-        self.ulta = 0
+        self.ulta = 75
         self.form = False
 
 
@@ -121,7 +123,8 @@ class Player1(pygame.sprite.Sprite):
             self.anime_atk = False
             self.anime_ult = True
             self.flag_damage = True
-        if key[pygame.K_d]:
+            aizen_music.play()
+        if key[pygame.K_d] and not self.anime_ult:
             if self.form:
                 self.anime_run = False
             else:
@@ -129,7 +132,7 @@ class Player1(pygame.sprite.Sprite):
                 self.anime_idle = False
                 if not self.anime_atk and not self.anime_ult and not self.form:
                     self.anime_run = True
-        elif key[pygame.K_a]:
+        elif key[pygame.K_a] and not self.anime_ult:
             if self.form:
                 self.anime_run = False
             else:
@@ -192,6 +195,7 @@ class Player1(pygame.sprite.Sprite):
 
         if self.anime_ult:
             self.timer_anime += 1
+            sc.blit(aizen_menu_image, (300, 1))
             if self.timer_anime / FPS > 0.1:
                 if self.frame == len(player1_ult_image) - 1:
                     self.frame = 0
@@ -306,7 +310,7 @@ class Player2(pygame.sprite.Sprite):
         self.flag_damage = False
         self.hp_bar = "red"
         self.mask_list = []
-        self.ulta = 75
+        self.ulta = 0
         self.form = False
 
 
@@ -329,6 +333,7 @@ class Player2(pygame.sprite.Sprite):
             self.anime_atk = False
             self.anime_ult = True
             self.flag_damage = True
+            byakuya_music.play()
         if key[pygame.K_RIGHT] and not self.anime_ult:
             self.rect.x += 6
             self.anime_idle = False
