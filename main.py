@@ -12,7 +12,7 @@ FPS=60
 sc=pygame.display.set_mode((WIDTH, HEIGHT))
 clock=pygame.time.Clock()
 lvl = "menu"
-pygame.mixer.music.load('bankai-ep365.mp3')
+pygame.mixer.music.load('aizen-bankai.mp3')
 pygame.mixer.music.play(0)
 pygame.display.set_mode((1200, 600))
 
@@ -119,7 +119,7 @@ class Player1(pygame.sprite.Sprite):
             self.anime_atk = False
             self.anime_ult = True
             self.flag_damage = True
-        elif key[pygame.K_d]:
+        if key[pygame.K_d]:
             if self.form:
                 self.anime_run = False
             else:
@@ -156,7 +156,6 @@ class Player1(pygame.sprite.Sprite):
                 self.image = player1_idle_image[self.frame]
             except:
                 self.frame = 0
-
 
         if self.anime_run:
             self.timer_anime += 1
@@ -280,7 +279,7 @@ class Player1(pygame.sprite.Sprite):
         if self.form:
             key = pygame.key.get_pressed()
             if key[pygame.K_e]:
-                sc.blit(korobka_image, player2.rect)
+                sc.blit(korobka_image[0], player2.rect)
 
 class Player2(pygame.sprite.Sprite):
     def __init__(self, image, pos):
@@ -298,12 +297,15 @@ class Player2(pygame.sprite.Sprite):
         self.anime_idle = True
         self.anime_run = False
         self.anime_atk = False
+        self.anime_ult = False
+        self.anime_form = False
         self.dir = "left"
         self.hp = 100
         self.flag_damage = False
         self.hp_bar = "red"
         self.mask_list = []
         self.ulta = 0
+        self.form = False
 
 
     def update(self):
@@ -318,18 +320,25 @@ class Player2(pygame.sprite.Sprite):
             self.anime_run = False
             self.anime_atk = True
             self.flag_damage = True
-        elif key[pygame.K_RIGHT]:
+        if key[pygame.K_DOWN] and self.ulta >= 75 and not self.anime_ult and not self.form:
+            self.frame = 0
+            self.anime_idle = False
+            self.anime_run = False
+            self.anime_atk = False
+            self.anime_ult = True
+            self.flag_damage = True
+        if key[pygame.K_RIGHT] and not self.anime_ult:
             self.rect.x += 6
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
-        elif key[pygame.K_LEFT]:
+        elif key[pygame.K_LEFT] and not self.anime_ult:
             self.rect.x -= 6
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
         else:
-            if not self.anime_atk:
+            if not self.anime_atk and not self.anime_ult:
                 self.anime_idle = True
             self.anime_run = False
 
@@ -349,8 +358,6 @@ class Player2(pygame.sprite.Sprite):
                 self.image = player2_idle_image[self.frame]
             except:
                 self.frame = 0
-
-
 
         if self.anime_run:
             self.timer_anime += 1
@@ -383,6 +390,20 @@ class Player2(pygame.sprite.Sprite):
             except:
                 self.frame = 0
 
+        if self.anime_ult:
+            self.timer_anime += 1
+            if self.timer_anime / FPS > 0.1:
+                if self.frame == len(player2_ult_image) - 1:
+                    self.frame = 0
+                    self.anime_ult = False
+                    self.ulta = 0
+                else:
+                    self.frame += 1
+                self.timer_anime = 0
+            try:
+                self.image = player2_ult_image[self.frame]
+            except:
+                self.frame = 0
 
         if self.jump:
             if self.jump_step <= 22:
@@ -414,6 +435,7 @@ class Player2(pygame.sprite.Sprite):
             pygame.draw.rect(sc, (205, 92, 92), (200 + (1000 - 2 * self.ulta), 50, 600, 30))
         elif self.ulta >= 75:
             pygame.draw.rect(sc, (205, 92, 92), (1050, 50, 600, 30))
+            sc.blit(BANKAI_image, (1135, 55))
 
         if self.hp <= 0:
             self.kill()
@@ -430,6 +452,18 @@ class Player2(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(self.image, True, False)
         except:
             self.frame = 0
+
+        if self.ulta < 75:
+            self.anime_ult = False
+
+
+class Sakura(pygame.sptite.Sprite):
+    def __init__(self, image, pos):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = image[0]
+        self.rect = self.image.get_rect()
+    def update(self):
+
 
 
 class FON:
