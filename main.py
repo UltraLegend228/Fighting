@@ -67,6 +67,8 @@ def startMenu():
 def game_lvl():
     sc.fill("grey")
     fon.update()
+    sakura_group.update()
+    sakura_group.draw(sc)
     player1_group.update()
     player1_group.draw(sc)
     player2_group.update()
@@ -304,7 +306,7 @@ class Player2(pygame.sprite.Sprite):
         self.flag_damage = False
         self.hp_bar = "red"
         self.mask_list = []
-        self.ulta = 0
+        self.ulta = 75
         self.form = False
 
 
@@ -335,7 +337,7 @@ class Player2(pygame.sprite.Sprite):
         elif key[pygame.K_LEFT] and not self.anime_ult:
             self.rect.x -= 6
             self.anime_idle = False
-            if not self.anime_atk:
+            if not self.anime_atk and not self.anime_ult:
                 self.anime_run = True
         else:
             if not self.anime_atk and not self.anime_ult:
@@ -397,6 +399,8 @@ class Player2(pygame.sprite.Sprite):
                     self.frame = 0
                     self.anime_ult = False
                     self.ulta = 0
+                    sakura = Sakura(sakura_image, (1200, 300))
+                    sakura_group.add(sakura)
                 else:
                     self.frame += 1
                 self.timer_anime = 0
@@ -457,13 +461,24 @@ class Player2(pygame.sprite.Sprite):
             self.anime_ult = False
 
 
-class Sakura(pygame.sptite.Sprite):
+class Sakura(pygame.sprite.Sprite):
     def __init__(self, image, pos):
         pygame.sprite.Sprite.__init__(self)
-        self.image = image[0]
+        self.image = image
         self.rect = self.image.get_rect()
+        self.rect.x = pos[0]
+        self.rect.y = pos[1]
+        self.mask_list = []
     def update(self):
-
+        self.rect.x -= 20
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_outline = self.mask.outline()
+        self.mask_list = []
+        for i in self.mask_outline:
+            self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
+        if len(set(self.mask_list) & set(player1.mask_list)) > 0:
+            player1.hp -= 0.8
+            self.flag_damage = False
 
 
 class FON:
@@ -488,8 +503,9 @@ def help():
 
 
 def restart():
-    global fon, player1, player1_group, player2, player2_group
+    global fon, player1, player1_group, player2, player2_group, sakura_group
     fon = FON()
+    sakura_group = pygame.sprite.Group()
     player1_group = pygame.sprite.Group()
     player1 = Player1(player1_idle_image, (0, 0))
     player1_group.add(player1)
