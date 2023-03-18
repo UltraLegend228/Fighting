@@ -91,4 +91,10 @@ korobka_image = [pygame.image.load("image/aizen/korobka 3.png").convert_alpha(),
                  pygame.image.load("image/aizen/korobka 6.png").convert_alpha(),
                  pygame.image.load("image/aizen/korobka 7.png").convert_alpha()]
 sakura_image = pygame.image.load("image/byakuya/sakura.png").convert_alpha()
+shop_image = pygame.image.load("image/menu/shop.png").convert_alpha()
+aizen_select_image = pygame.image.load("image/menu/aizen select menu.png").convert_alpha()
+byakuya_select_image = pygame.image.load("image/menu/byakuya select menu.png").convert_alpha()
+continue_image = pygame.image.load("image/menu/continue.png").convert_alpha()
+continue2_image = pygame.image.load("image/menu/continue 2.png").convert_alpha()
+byakuya_menu_image = pygame.image.load("image/menu/byakuya menu.png").convert_alpha()
 

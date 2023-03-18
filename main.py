@@ -9,6 +9,8 @@ os.chdir(current_path)
 WIDTH=1200
 HEIGHT=600
 FPS=60
+p1 = "aizen"
+p2 = "byakuya"
 sc=pygame.display.set_mode((WIDTH, HEIGHT))
 clock=pygame.time.Clock()
 lvl = "menu"
@@ -45,7 +47,7 @@ def startMenu():
         if 100<pos_mouse[0]<400:
             if 100<pos_mouse[1]<175:
                 restart()
-                lvl="Game"
+                lvl="Select"
     if pygame.mouse.get_pressed()[0]:
         if 100 < pos_mouse[0] < 400:
             if 400 < pos_mouse[1] < 475:
@@ -101,7 +103,7 @@ class Player1(pygame.sprite.Sprite):
         self.flag_damage = False
         self.hp_bar = "blue"
         self.mask_list = []
-        self.ulta = 75
+        self.ulta = 0
         self.form = False
 
 
@@ -310,7 +312,7 @@ class Player2(pygame.sprite.Sprite):
         self.flag_damage = False
         self.hp_bar = "red"
         self.mask_list = []
-        self.ulta = 0
+        self.ulta = 75
         self.form = False
 
 
@@ -399,6 +401,7 @@ class Player2(pygame.sprite.Sprite):
 
         if self.anime_ult:
             self.timer_anime += 1
+            sc.blit(byakuya_menu_image, (650, 0))
             if self.timer_anime / FPS > 0.1:
                 if self.frame == len(player2_ult_image) - 1:
                     self.frame = 0
@@ -485,7 +488,6 @@ class Sakura(pygame.sprite.Sprite):
             player1.hp -= 0.8
             self.flag_damage = False
 
-
 class FON:
     def __init__(self):
         self.timer = 0
@@ -506,6 +508,59 @@ def help():
     sc.fill("grey")
     pygame.display.update()
 
+def select():
+    global lvl, p1, p2
+    f1 = pygame.font.SysFont('arial', 46)
+    f2 = pygame.font.SysFont('arial', 30)
+    sc.blit(shop_image, (0, 0))
+    sc.blit(aizen_select_image, (350, 100))
+    sc.blit(aizen_select_image, (800, 100))
+    sc.blit(byakuya_select_image, (800, 250))
+    sc.blit(byakuya_select_image, (350, 250))
+    P1 = f1.render('P1', True, (0, 0, 0))
+    sc.blit(P1, (180, 50))
+    P2 = f1.render('P2', True, (0, 0, 0))
+    sc.blit(P2, (1010, 50))
+    aizen = f2.render('AIZEN', True, (0, 0, 0))
+    sc.blit(aizen, (360, 200))
+    sc.blit(aizen, (800, 200))
+    byakuya = f2.render('BYAKUYA', True, (0, 0, 0))
+    sc.blit(byakuya, (800, 350))
+    sc.blit(byakuya, (350, 350))
+    sc.blit(continue_image, (495, 500))
+    pos_mouse = pygame.mouse.get_pos()
+    if 495 < pos_mouse[0] < 677:
+        if 500 < pos_mouse[1] < 582:
+            sc.blit(continue2_image, (495, 500))
+            if pygame.mouse.get_pressed()[0]:
+                lvl = "Game"
+
+    if pygame.mouse.get_pressed()[0]:
+        if 350 < pos_mouse[0] < 450:
+            if 100 < pos_mouse[1] < 200:
+                p1 = "aizen"
+        if 350 < pos_mouse[0] < 450:
+            if 250 < pos_mouse[1] < 350:
+                p1 = "byakuya"
+
+    if pygame.mouse.get_pressed()[0]:
+        if 800 < pos_mouse[0] < 900:
+            if 100 < pos_mouse[1] < 200:
+                p2 = "aizen"
+        if 800 < pos_mouse[0] < 900:
+            if 250 < pos_mouse[1] < 350:
+                p2 = "byakuya"
+
+    if p1 == "aizen":
+        sc.blit(player1_idle_image[0], (100, 200))
+    elif p1 == "byakuya":
+        sc.blit(player2_idle_image[0], (100, 200))
+
+    if p2 == "aizen":
+        sc.blit(player1_idle_image[0], (950, 220))
+    elif p2 == "byakuya":
+        sc.blit(player2_idle_image[0], (950, 220))
+    pygame.display.update()
 
 def restart():
     global fon, player1, player1_group, player2, player2_group, sakura_group
@@ -531,4 +586,6 @@ while True:
         startMenu()
     elif lvl == "Help":
         help()
+    elif lvl == "Select":
+        select()
     clock.tick(FPS)
