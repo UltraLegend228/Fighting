@@ -6,8 +6,8 @@ import random
 pygame.init()
 current_path=os.path.dirname(__file__)
 os.chdir(current_path)
-WIDTH=1200
-HEIGHT=600
+WIDTH= 1200
+HEIGHT= 600
 FPS=60
 p1 = "aizen"
 p2 = "byakuya"
@@ -71,12 +71,15 @@ def startMenu():
 def game_lvl():
     sc.fill("grey")
     fon.update()
-    sakura_group.update()
-    sakura_group.draw(sc)
     player1_group.update()
     player1_group.draw(sc)
     player2_group.update()
     player2_group.draw(sc)
+
+    sakura_group.update()
+    sakura_group.draw(sc)
+    korobka_group.update()
+    korobka_group.draw(sc)
     pygame.display.update()
 
 
@@ -103,7 +106,7 @@ class Player1(pygame.sprite.Sprite):
         self.flag_damage = False
         self.hp_bar = "blue"
         self.mask_list = []
-        self.ulta = 0
+        self.ulta = 75
         self.form = False
 
 
@@ -287,7 +290,8 @@ class Player1(pygame.sprite.Sprite):
         if self.form:
             key = pygame.key.get_pressed()
             if key[pygame.K_e]:
-                sc.blit(korobka_image[0], player2.rect)
+                korobka = Korobka(korobka_image, (800, 200))
+                korobka_group.add(korobka)
 
 class Player2(pygame.sprite.Sprite):
     def __init__(self, image, pos):
@@ -312,7 +316,7 @@ class Player2(pygame.sprite.Sprite):
         self.flag_damage = False
         self.hp_bar = "red"
         self.mask_list = []
-        self.ulta = 75
+        self.ulta = 0
         self.form = False
 
 
@@ -344,7 +348,7 @@ class Player2(pygame.sprite.Sprite):
         elif key[pygame.K_LEFT] and not self.anime_ult:
             self.rect.x -= 6
             self.anime_idle = False
-            if not self.anime_atk and not self.anime_ult:
+            if not self.anime_atk:
                 self.anime_run = True
         else:
             if not self.anime_atk and not self.anime_ult:
@@ -472,21 +476,52 @@ class Player2(pygame.sprite.Sprite):
 class Sakura(pygame.sprite.Sprite):
     def __init__(self, image, pos):
         pygame.sprite.Sprite.__init__(self)
-        self.image = image
+        self.image = image[0]
+        self.rect = self.image.get_rect()
+    def update(self):
+            self.rect.x -= 20
+            self.mask = pygame.mask.from_surface(self.image)
+            self.mask_outline = self.mask.outline()
+            self.mask_list = []
+            for i in self.mask_outline:
+                self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
+            if len(set(self.mask_list) & set(player1.mask_list)) > 0:
+                player1.hp -= 0.8
+                self.flag_damage = False
+
+
+class Korobka(pygame.sprite.Sprite):
+    def __init__(self, image, pos):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = image[0]
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
-        self.mask_list = []
+        self.frame = 0
+        self.timer_anime = 0
+        self.anime = False
+        self.timer_atack = 0
+
     def update(self):
-        self.rect.x -= 20
-        self.mask = pygame.mask.from_surface(self.image)
-        self.mask_outline = self.mask.outline()
-        self.mask_list = []
-        for i in self.mask_outline:
-            self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
-        if len(set(self.mask_list) & set(player1.mask_list)) > 0:
-            player1.hp -= 0.8
-            self.flag_damage = False
+        self.anime = True
+        if self.anime:
+            self.timer_anime += 1
+            if self.timer_anime / FPS > 0.1:
+                if self.frame == len(korobka_image) - 1:
+                    self.frame = 0
+                    self.kill()
+                else:
+                    self.frame += 1
+                self.timer_anime = 0
+        if pygame.sprite.spritecollide(self, player2_group, False):
+            player2.hp -= 0.5
+
+        try:
+
+            self.image = korobka_image[self.frame]
+        except:
+            self.frame = 0
+
 
 class FON:
     def __init__(self):
@@ -563,15 +598,17 @@ def select():
     pygame.display.update()
 
 def restart():
-    global fon, player1, player1_group, player2, player2_group, sakura_group
+    global fon, player1, player1_group, player2, player2_group
+    global korobka_group, sakura_group
     fon = FON()
-    sakura_group = pygame.sprite.Group()
     player1_group = pygame.sprite.Group()
     player1 = Player1(player1_idle_image, (0, 0))
     player1_group.add(player1)
     player2_group = pygame.sprite.Group()
     player2 = Player2(player2_idle_image, (0, 0))
     player2_group.add(player2)
+    korobka_group = pygame.sprite.Group()
+    sakura_group = pygame.sprite.Group()
 
 restart()
 

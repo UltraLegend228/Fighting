@@ -85,11 +85,13 @@ bleach_image = pygame.image.load("image/menu/bleach.png").convert_alpha()
 BANKAI_image = pygame.image.load("image/menu/BANKAI 2.png").convert_alpha()
 help_image = pygame.image.load("image/menu/help.png").convert_alpha()
 help2_image = pygame.image.load("image/menu/help 2.png").convert_alpha()
+
 korobka_image = [pygame.image.load("image/aizen/korobka 3.png").convert_alpha(),
-                 pygame.image.load("image/aizen/korobka 4.png").convert_alpha(),
+                 pygame.image.load("image/aizen/korobka4.png").convert_alpha(),
                  pygame.image.load("image/aizen/korobka 5.png").convert_alpha(),
                  pygame.image.load("image/aizen/korobka 6.png").convert_alpha(),
                  pygame.image.load("image/aizen/korobka 7.png").convert_alpha()]
+
 sakura_image = pygame.image.load("image/byakuya/sakura.png").convert_alpha()
 shop_image = pygame.image.load("image/menu/shop.png").convert_alpha()
 aizen_select_image = pygame.image.load("image/menu/aizen select menu.png").convert_alpha()
