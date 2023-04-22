@@ -24,6 +24,18 @@ player3_atk_image = [pygame.image.load("image/gin/ginatk1.png").convert_alpha(),
                      pygame.image.load("image/gin/ginatk5.png").convert_alpha(),
                      pygame.image.load("image/gin/ginatk6.png").convert_alpha()]
 
+player3_atk2_image = [pygame.image.load("image/gin/gin 1 atk 2.png").convert_alpha(),
+                      pygame.image.load("image/gin/gin 2 atk 2.png").convert_alpha(),
+                      pygame.image.load("image/gin/gin 3 atk 2.png").convert_alpha(),
+                      pygame.image.load("image/gin/gin 4 atk 2.png").convert_alpha(),
+                      pygame.image.load("image/gin/gin 5 atk 2.png").convert_alpha(),
+                      pygame.image.load("image/gin/gin 6 atk 2.png").convert_alpha(),
+                      pygame.image.load("image/gin/gin 7 atk 2.png").convert_alpha(),
+                      pygame.image.load("image/gin/gin 8 atk 2.png").convert_alpha()]
+
+player3_ult_image = [pygame.image.load("image/gin/ginult1.png.png").convert_alpha(),
+                     pygame.image.load("image/gin/ginult2.png.png").convert_alpha()]
+
 player2_run_image = [pygame.image.load("image/byakuya/11 run.png").convert_alpha(),
                      pygame.image.load("image/byakuya/12 run.png").convert_alpha(),
                      pygame.image.load("image/byakuya/13 run.png").convert_alpha(),
@@ -126,6 +138,8 @@ bleach_image = pygame.image.load("image/menu/bleach.png").convert_alpha()
 BANKAI_image = pygame.image.load("image/menu/BANKAI 2.png").convert_alpha()
 help_image = pygame.image.load("image/menu/help.png").convert_alpha()
 help2_image = pygame.image.load("image/menu/help 2.png").convert_alpha()
+
+kotoshka_image = pygame.image.load("image/gin/kartoshka.png").convert_alpha()
 
 korobka_image = [pygame.image.load("image/aizen/korobka 3.png").convert_alpha(),
                  pygame.image.load("image/aizen/korobka 4.png").convert_alpha(),

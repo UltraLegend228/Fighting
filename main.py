@@ -75,6 +75,9 @@ def game_lvl():
     player1_group.draw(sc)
     player2_group.update()
     player2_group.draw(sc)
+    player2_group.update()
+    player3_group.update()
+    player3_group.draw(sc)
     sakura_group.update()
     sakura_group.draw(sc)
     korobka_group.update()
@@ -113,7 +116,7 @@ class Player1(pygame.sprite.Sprite):
     def update(self):
         global FPS, player1, player2, p1, p2, Korobka
         key = pygame.key.get_pressed()
-        if p2 == "byakuya":
+        if p1 == "byakuya":
             self.control = [
                 pygame.K_d,
                 pygame.K_a,
@@ -556,6 +559,170 @@ class Player2(pygame.sprite.Sprite):
             self.anime_ult = False
 
 
+
+class Player3(pygame.sprite.Sprite):
+    def __init__(self, image, pos):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = image[0]
+        self.rect = self.image.get_rect()
+        self.rect.x = pos[0]
+        self.rect.y = pos[1]
+        self.rect.x = 50
+        self.rect.bottom = HEIGHT - 40
+        self.jump = False
+        self.jump_step = -22
+        self.frame = 0
+        self.timer_anime = 0
+        self.anime_idle = True
+        self.anime_run = False
+        self.anime_atk = False
+        self.anime_atk2 = False
+        self.anime_ult = False
+        self.hp = 100
+        self.ult = 75
+        self.mask_list = []
+    def update(self):
+        global FPS, player1, player2, p1, p2,  Korobka
+        key = pygame.key.get_pressed()
+        if p1 == "gin":
+            self.control = [
+                pygame.K_d,
+                pygame.K_a,
+                pygame.K_e,
+                pygame.K_w,
+                pygame.K_s,
+                pygame.K_q]
+        else:
+            self.control = [
+                pygame.K_RIGHT,
+                pygame.K_LEFT,
+                pygame.K_m,
+                pygame.K_UP,
+                pygame.K_DOWN,
+                pygame.K_n]
+
+        if key[self.control[3]]:
+            self.jump = True
+        if key[self.control[2]] and not self.anime_atk and not self.anime_atk2:
+            self.frame = 0
+            self.anime_idle = False
+            self.anime_run = False
+            self.anime_atk = True
+            self.flag_damage = True
+        if key[self.control[5]] and not self.anime_atk and not self.anime_atk2:
+            self.frame = 0
+            self.anime_idle = False
+            self.anime_run = False
+            self.anime_atk2 = True
+            self.flag_damage = True
+        if key[self.control[4]] and self.ulta >= 75 and not self.anime_ult:
+            self.frame = 0
+            self.anime_idle = False
+            self.anime_run = False
+            self.anime_atk = False
+            self.anime_ult = True
+            self.flag_damage = True
+        if key[self.control[0]] and not self.anime_ult and not self.anime_atk and not self.anime_atk2:
+                if not self.anime_atk and not self.anime_ult:
+                    self.anime_run = True
+        elif key[self.control[1]] and not self.anime_ult and not self.anime_atk and not self.anime_atk2:
+                if not self.anime_atk and not self.anime_ult:
+                    self.anime_run = True
+        else:
+            if not self.anime_atk and not self.anime_atk2 and not self.anime_ult:
+                self.anime_idle = True
+            self.anime_run = False
+
+
+        if self.jump:
+            if self.jump_step <= 22:
+                self.rect.y += self.jump_step
+                self.jump_step += 1
+            else:
+                self.jump = False
+                self.jump_step = -22
+
+        if self.anime_atk:
+            self.timer_anime += 1
+            if self.timer_anime / FPS > 0.1:
+                if self.frame == len(player3_atk_image) - 1:
+                    self.frame = 0
+                    self.anime_idle = True
+                    self.anime_atk = False
+                else:
+                    self.frame += 1
+                self.timer_anime = 0
+            try:
+                self.image = player3_atk_image[self.frame]
+            except:
+                self.frame = 0
+
+        if self.anime_atk2:
+            self.timer_anime += 1
+            if self.timer_anime / FPS > 0.16:
+                if self.frame == len(player3_atk2_image) - 1:
+                    self.frame = 0
+                    self.anime_idle = True
+                    self.anime_atk2 = False
+                else:
+                    self.frame += 1
+                self.timer_anime = 0
+            try:
+                self.image = player3_atk2_image[self.frame]
+            except:
+                self.frame = 0
+
+        if self.anime_run:
+            self.timer_anime += 1
+            if self.timer_anime / FPS > 0.1:
+                if self.frame == len(player3_run_image) - 1:
+                    self.frame = 0
+                    if self.anime_atk:
+                        self.anime_atk = False
+                        self.anime_run = True
+                else:
+                    self.frame += 1
+                self.timer_anime = 0
+            try:
+                self.image = player3_run_image[self.frame]
+            except:
+                self.frame = 0
+
+        if self.anime_idle:
+            self.timer_anime += 1
+            if self.timer_anime / FPS > 0.1:
+                if self.frame == len(player3_idle_image) - 1:
+                    self.frame = 0
+                    if self.anime_atk:
+                        self.anime_atk = False
+                        self.anime_idle = True
+                else:
+                    self.frame += 1
+                self.timer_anime = 0
+            try:
+                self.image = player1_idle_image[self.frame]
+            except:
+                self.frame = 0
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_outline = self.mask.outline()
+        self.mask_list = []
+        for i in self.mask_outline:
+            self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
+        if len(set(self.mask_list) & set(player2.mask_list)) > 0:
+            if self.anime_atk and self.flag_damage:
+                player2.hp -= 5
+                self.ulta += 5
+                self.flag_damage = False
+            if self.anime_atk2 and self.flag_damage:
+                player2.hp -= 7
+                self.ulta += 5
+                self.flag_damage = False
+
+
+
+
+
+
 class Sakura(pygame.sprite.Sprite):
     def __init__(self, image, pos):
         pygame.sprite.Sprite.__init__(self)
@@ -574,6 +741,23 @@ class Sakura(pygame.sprite.Sprite):
                 player1.hp -= 0.8
                 self.flag_damage = False
 
+class kortoshka(pygame.sprite.Sprite):
+    def __init__(self, image, pos):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.x = pos[0]
+        self.rect.y = pos[1]
+    def update(self):
+            self.rect.x -= 20
+            self.mask = pygame.mask.from_surface(self.image)
+            self.mask_outline = self.mask.outline()
+            self.mask_list = []
+            for i in self.mask_outline:
+                self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
+            if len(set(self.mask_list) & set(player1.mask_list)) > 0:
+                player1.hp -= 0.8
+                self.flag_damage = False
 
 class Korobka(pygame.sprite.Sprite):
     def __init__(self, image, pos):
@@ -690,7 +874,7 @@ def select():
     pygame.display.update()
 
 def restart():
-    global player1, player1_group, player2, player2_group
+    global player1, player1_group, player2, player2_group, player3, player3_group
     global korobka_group, sakura_group
     #fon = FON()
     player1_group = pygame.sprite.Group()
@@ -698,7 +882,8 @@ def restart():
     player1_group.add(player1)
     player2_group = pygame.sprite.Group()
     player2 = Player2(player2_idle_image, (0, 0))
-    player2_group.add(player2)
+    player3 = Player3(player3_idle_image, (0, 0))
+    player3_group = pygame.sprite.Group()
     korobka_group = pygame.sprite.Group()
     sakura_group = pygame.sprite.Group()
 
