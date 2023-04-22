@@ -33,8 +33,16 @@ player3_atk2_image = [pygame.image.load("image/gin/gin 1 atk 2.png").convert_alp
                       pygame.image.load("image/gin/gin 7 atk 2.png").convert_alpha(),
                       pygame.image.load("image/gin/gin 8 atk 2.png").convert_alpha()]
 
-player3_ult_image = [pygame.image.load("image/gin/ginult1.png.png").convert_alpha(),
-                     pygame.image.load("image/gin/ginult2.png.png").convert_alpha()]
+player3_ult_image = [pygame.image.load("image/gin/ginult1.png").convert_alpha(),
+                     pygame.image.load("image/gin/ginult2.png").convert_alpha(),
+                     pygame.image.load("image/gin/ginult3.png.").convert_alpha(),
+                     pygame.image.load("image/gin/ginult4.png").convert_alpha(),
+                     pygame.image.load("image/gin/ginult5.png").convert_alpha(),
+                     pygame.image.load("image/gin/ginult6.png").convert_alpha(),
+                     pygame.image.load("image/gin/ginult7.png").convert_alpha(),
+                     pygame.image.load("image/gin/ginult7.png").convert_alpha(),
+                     pygame.image.load("image/gin/ginult7.png").convert_alpha(),
+                     pygame.image.load("image/gin/ginult7.png").convert_alpha()]
 
 player2_run_image = [pygame.image.load("image/byakuya/11 run.png").convert_alpha(),
                      pygame.image.load("image/byakuya/12 run.png").convert_alpha(),
@@ -148,11 +156,21 @@ korobka_image = [pygame.image.load("image/aizen/korobka 3.png").convert_alpha(),
                  pygame.image.load("image/aizen/korobka 7.png").convert_alpha()]
 
 sakura_image = pygame.image.load("image/byakuya/sakura.png").convert_alpha()
+bankaiGIN_image = pygame.image.load("image/gin/kartoshka.png").convert_alpha()
 shop_image = pygame.image.load("image/menu/shop.png").convert_alpha()
 aizen_select_image = pygame.image.load("image/menu/aizen select menu.png").convert_alpha()
 byakuya_select_image = pygame.image.load("image/menu/byakuya select menu.png").convert_alpha()
+gin_select_image = pygame.image.load("image/menu/gin select menu.png").convert_alpha()
 continue_image = pygame.image.load("image/menu/continue.png").convert_alpha()
 continue2_image = pygame.image.load("image/menu/continue 2.png").convert_alpha()
 byakuya_menu_image = pygame.image.load("image/menu/byakuya menu.png").convert_alpha()
+gin_menu_image = pygame.image.load("image/menu/gin menu.jpg").convert_alpha()
 fon = pygame.image.load("image/menu/fon.png").convert_alpha()
+
+control_wasd_image = pygame.image.load("image/menu/wasd.png").convert_alpha()
+control_arrows_image = pygame.image.load("image/menu/arrows.png").convert_alpha()
+control_e_image = pygame.image.load("image/menu/e.png").convert_alpha()
+control_q_image = pygame.image.load("image/menu/q.png").convert_alpha()
+control_m_image = pygame.image.load("image/menu/m.png").convert_alpha()
+control_n_image = pygame.image.load("image/menu/n.png").convert_alpha()
 
