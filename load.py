@@ -147,7 +147,8 @@ BANKAI_image = pygame.image.load("image/menu/BANKAI 2.png").convert_alpha()
 help_image = pygame.image.load("image/menu/help.png").convert_alpha()
 help2_image = pygame.image.load("image/menu/help 2.png").convert_alpha()
 
-kotoshka_image = pygame.image.load("image/gin/kartoshka.png").convert_alpha()
+bankaiGIN_image = [pygame.image.load("image/gin/kartoshka.png").convert_alpha(),
+                   pygame.image.load("image/gin/kGIN 2.png").convert_alpha()]
 
 korobka_image = [pygame.image.load("image/aizen/korobka 3.png").convert_alpha(),
                  pygame.image.load("image/aizen/korobka 4.png").convert_alpha(),
@@ -156,7 +157,6 @@ korobka_image = [pygame.image.load("image/aizen/korobka 3.png").convert_alpha(),
                  pygame.image.load("image/aizen/korobka 7.png").convert_alpha()]
 
 sakura_image = pygame.image.load("image/byakuya/sakura.png").convert_alpha()
-bankaiGIN_image = pygame.image.load("image/gin/kartoshka.png").convert_alpha()
 shop_image = pygame.image.load("image/menu/shop.png").convert_alpha()
 aizen_select_image = pygame.image.load("image/menu/aizen select menu.png").convert_alpha()
 byakuya_select_image = pygame.image.load("image/menu/byakuya select menu.png").convert_alpha()
@@ -173,4 +173,5 @@ control_e_image = pygame.image.load("image/menu/e.png").convert_alpha()
 control_q_image = pygame.image.load("image/menu/q.png").convert_alpha()
 control_m_image = pygame.image.load("image/menu/m.png").convert_alpha()
 control_n_image = pygame.image.load("image/menu/n.png").convert_alpha()
+control_back_image = pygame.image.load("image/menu/back.png").convert_alpha()
 

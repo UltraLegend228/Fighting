@@ -714,7 +714,7 @@ class Player3(pygame.sprite.Sprite):
                     self.frame = 0
                     self.anime_ult = False
                     self.ulta = 0
-                    bankaiGIN = BankaiGIN(bankaiGIN_image, (self.rect.right, self.rect.right))
+                    bankaiGIN = BankaiGIN(bankaiGIN_image, (self.rect.x, self.rect.y))
                     bankaiGIN_group.add(bankaiGIN)
                 else:
                     self.frame += 1
@@ -798,19 +798,33 @@ class Sakura(pygame.sprite.Sprite):
 class BankaiGIN(pygame.sprite.Sprite):
     def __init__(self, image, pos):
         pygame.sprite.Sprite.__init__(self)
-        self.image = image
+        self.image = image[0]
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
+        self.dir = ""
     def update(self):
-            self.mask = pygame.mask.from_surface(self.image)
-            self.mask_outline = self.mask.outline()
-            self.mask_list = []
-            for i in self.mask_outline:
-                self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
-            if len(set(self.mask_list) & set(player2.mask_list)) > 0:
-                player2.hp -= 0.8
-                self.flag_damage = False
+        #if player1.dir == "right":
+        self.rect.x += 10
+        #    self.dir = player1.dir
+        #elif player1.dir == "left":
+        #    self.rect.x -= 10
+        #    self.dir = player1.dir
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_outline = self.mask.outline()
+        self.mask_list = []
+        for i in self.mask_outline:
+            self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
+        if len(set(self.mask_list) & set(player2.mask_list)) > 0:
+            player2.hp -= 0.8
+            self.flag_damage = False
+        #try:
+        #    if self.dir == "right":
+        #        self.image = self.image[0]
+        #    else:
+        #        self.image = self.image[1]
+        #except:
+        #    self.frame = 0
 
 
 class Korobka(pygame.sprite.Sprite):
@@ -869,6 +883,7 @@ class Korobka(pygame.sprite.Sprite):
     #        self.timer = 0
 
 def help():
+    global lvl
     sc.fill("grey")
     f1 = pygame.font.SysFont('arial', 46)
     sc.blit(control_wasd_image, (50, 50))
@@ -877,13 +892,19 @@ def help():
     sc.blit(control_m_image, (200, 300))
     sc.blit(control_q_image, (50, 450))
     sc.blit(control_n_image, (200, 450))
+    sc.blit(control_back_image, (1100, 50))
     control = f1.render(' ------ CONTROL', True, (0, 0, 0))
     sc.blit(control, (530, 130))
     weakATK = f1.render(' ------ WEAK ATTACK', True, (0, 0, 0))
     sc.blit(weakATK, (350, 320))
     strongATK = f1.render(' ------ STRONG ATTACK', True, (0, 0, 0))
     sc.blit(strongATK, (350, 470))
-    pygame.display.update()
+    if pygame.mouse.get_pressed()[0]:
+        pos_mouse = pygame.mouse.get_pos()
+        if 1100 < pos_mouse[0] < 1150:
+            if 50 < pos_mouse[1] < 100:
+                lvl = "menu"
+        pygame.display.update()
 
 def select():
     global lvl, p1, p2
