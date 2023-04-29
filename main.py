@@ -570,6 +570,7 @@ class Player3(pygame.sprite.Sprite):
         self.jump_step = -22
         self.frame = 0
         self.timer_anime = 0
+        self.anime_death = False
         self.anime_idle = True
         self.anime_run = False
         self.anime_atk = False
@@ -577,7 +578,7 @@ class Player3(pygame.sprite.Sprite):
         self.anime_ult = False
         self.anime_form = False
         self.dir = "left"
-        self.hp = 100
+        self.hp = 1
         self.flag_damage = False
         self.hp_bar = "green"
         self.mask_list = []
@@ -628,7 +629,7 @@ class Player3(pygame.sprite.Sprite):
             self.anime_ult = True
             self.flag_damage = True
             gin_music.play()
-        if key[self.control[0]] and not self.anime_ult and not self.anime_atk and not self.anime_atk2:
+        if key[self.control[0]] and not self.anime_ult and not self.anime_ult and not self.form:
             self.rect.x += 6
             self.anime_idle = False
             if not self.anime_atk:
@@ -642,6 +643,14 @@ class Player3(pygame.sprite.Sprite):
             if not self.anime_atk and not self.anime_ult and not self.anime_atk2:
                 self.anime_idle = True
             self.anime_run = False
+        if self.hp <= 0 and not self.anime_ult and not self.anime_atk and not self.anime_atk2 and not self.anime_run and not self.jump:
+            self.anime_death = True
+            self.anime_atk = False
+            self.anime_atk2 = False
+            self.anime_idle = False
+            self.anime_run = False
+            self.anime_ult = False
+            self.jump = False
 
         if self.anime_idle:
             self.timer_anime += 1
@@ -654,10 +663,12 @@ class Player3(pygame.sprite.Sprite):
                 else:
                     self.frame += 1
                 self.timer_anime = 0
+
             try:
                 self.image = player3_idle_image[self.frame]
             except:
                 self.frame = 0
+
 
         if self.anime_run:
             self.timer_anime += 1
@@ -675,6 +686,8 @@ class Player3(pygame.sprite.Sprite):
             except:
                 self.frame = 0
 
+
+
         if self.anime_atk:
             self.timer_anime += 1
             if self.timer_anime / FPS > 0.1:
@@ -689,6 +702,27 @@ class Player3(pygame.sprite.Sprite):
                 self.image = player3_atk_image[self.frame]
             except:
                 self.frame = 0
+
+        if self.anime_death:
+            self.timer_anime += 1
+            if self.timer_anime / FPS > 0.1:
+                if self.frame == len(player3_death_image) - 1:
+                    self.frame = 0
+                    self.anime_atk = False
+                    self.anime_atk2 = False
+                    self.anime_idle = False
+                    self.anime_run = False
+                    self.anime_ult = False
+                    self.jump = False
+
+                else:
+                    self.frame += 1
+                self.timer_anime = 0
+            try:
+                self.image = player3_death_image[self.frame]
+            except:
+                self.frame = 0
+
 
         if self.anime_atk2:
             self.timer_anime += 1
@@ -756,8 +790,7 @@ class Player3(pygame.sprite.Sprite):
             pygame.draw.rect(sc, (0, 191, 255), (0, 50, 150, 30))
             sc.blit(BANKAI_image, (65, 55))
 
-        if self.hp <= 0:
-            self.kill()
+
 
         if self.rect.center[0] - player2.rect.center[0] < 0:
             self.dir = "right"

@@ -24,6 +24,13 @@ player3_atk_image = [pygame.image.load("image/gin/ginatk1.png").convert_alpha(),
                      pygame.image.load("image/gin/ginatk5.png").convert_alpha(),
                      pygame.image.load("image/gin/ginatk6.png").convert_alpha()]
 
+player3_death_image = [pygame.image.load("image/gin/gindeath1.png").convert_alpha(),
+                       pygame.image.load("image/gin/gindeat2.png").convert_alpha(),
+                       pygame.image.load("image/gin/gindeath3.png").convert_alpha(),
+                       pygame.image.load("image/gin/gindeat4.png").convert_alpha(),
+                       pygame.image.load("image/gin/gindeat5.png").convert_alpha(),
+                       pygame.image.load("image/gin/gindeath6.png").convert_alpha()]
+
 player3_atk2_image = [pygame.image.load("image/gin/gin 1 atk 2.png").convert_alpha(),
                       pygame.image.load("image/gin/gin 2 atk 2.png").convert_alpha(),
                       pygame.image.load("image/gin/gin 3 atk 2.png").convert_alpha(),
@@ -77,8 +84,6 @@ player2_atk2_image = [pygame.image.load("image/byakuya/2 atk 11.png").convert_al
                      pygame.image.load("image/byakuya/2 atk 18.png").convert_alpha(),
                      pygame.image.load("image/byakuya/2 atk 19.png").convert_alpha()]
 
-
-
 player1_idle_image = [pygame.image.load("image/aizen/1.png").convert_alpha(),
                       pygame.image.load("image/aizen/2.png").convert_alpha(),
                       pygame.image.load("image/aizen/3.png").convert_alpha(),
@@ -126,7 +131,6 @@ player1_death_image = [pygame.image.load("image/aizen/death1.png").convert_alpha
                        pygame.image.load("image/aizen/death4.png").convert_alpha(),
                        pygame.image.load("image/aizen/death5.png").convert_alpha()]
 
-
 bg_image = [pygame.image.load("image/fon/1.jpg").convert_alpha(),
             pygame.image.load("image/fon/2.jpg").convert_alpha(),
             pygame.image.load("image/fon/3.jpg").convert_alpha(),
@@ -135,7 +139,6 @@ bg_image = [pygame.image.load("image/fon/1.jpg").convert_alpha(),
             pygame.image.load("image/fon/6.jpg").convert_alpha(),
             pygame.image.load("image/fon/7.jpg").convert_alpha(),
             pygame.image.load("image/fon/8.jpg").convert_alpha()]
-
 
 menu_image = pygame.image.load("image/menu/menu.jpg").convert_alpha()
 start_image = pygame.image.load("image/menu/start.png").convert_alpha()
