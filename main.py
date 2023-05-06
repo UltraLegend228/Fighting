@@ -584,6 +584,7 @@ class Player3(pygame.sprite.Sprite):
         self.mask_list = []
         self.ulta = 75
         self.form = False
+        self.death = False
 
 
     def update(self):
@@ -607,21 +608,21 @@ class Player3(pygame.sprite.Sprite):
                 pygame.K_s,
                 pygame.K_q]
 
-        if key[self.control[3]]:
+        if key[self.control[3]] and not self.death == True:
             self.jump = True
-        if key[self.control[2]] and not self.anime_atk and not self.anime_atk2:
+        if key[self.control[2]] and not self.anime_atk and not self.anime_atk2 and not self.death == True:
             self.frame = 0
             self.anime_idle = False
             self.anime_run = False
             self.anime_atk = True
             self.flag_damage = True
-        if key[self.control[5]] and not self.anime_atk and not self.anime_atk2:
+        if key[self.control[5]] and not self.anime_atk and not self.anime_atk2 and not self.death == True:
             self.frame = 0
             self.anime_idle = False
             self.anime_run = False
             self.anime_atk2 = True
             self.flag_damage = True
-        if key[self.control[4]] and self.ulta >= 75 and not self.anime_ult and not self.form:
+        if key[self.control[4]] and self.ulta >= 75 and not self.anime_ult and not self.form and not self.death == True:
             self.frame = 0
             self.anime_idle = False
             self.anime_run = False
@@ -629,12 +630,12 @@ class Player3(pygame.sprite.Sprite):
             self.anime_ult = True
             self.flag_damage = True
             gin_music.play()
-        if key[self.control[0]] and not self.anime_ult and not self.anime_ult and not self.form:
+        if key[self.control[0]] and not self.anime_ult and not self.anime_ult and not self.form and not self.death == True:
             self.rect.x += 6
             self.anime_idle = False
             if not self.anime_atk:
                 self.anime_run = True
-        elif key[self.control[1]] and not self.anime_ult and not self.anime_atk and not self.anime_atk2:
+        elif key[self.control[1]] and not self.anime_ult and not self.anime_atk and not self.anime_atk2 and not self.death == True:
             self.rect.x -= 6
             self.anime_idle = False
             if not self.anime_atk:
@@ -703,11 +704,13 @@ class Player3(pygame.sprite.Sprite):
             except:
                 self.frame = 0
 
-        if self.anime_death:
+        if self.anime_death and self.death == False:
             self.timer_anime += 1
             if self.timer_anime / FPS > 0.1:
                 if self.frame == len(player3_death_image) - 1:
-                    self.frame = 0
+
+                    self.death = True
+                    self.anime_death = False
                     self.anime_atk = False
                     self.anime_atk2 = False
                     self.anime_idle = False
