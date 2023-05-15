@@ -6,8 +6,8 @@ import random
 pygame.init()
 current_path=os.path.dirname(__file__)
 os.chdir(current_path)
-WIDTH = 1200
-HEIGHT = 600
+WIDTH= 1200
+HEIGHT= 600
 FPS=60
 p1 = "aizen"
 p2 = "byakuya"
@@ -155,15 +155,21 @@ class Player1(pygame.sprite.Sprite):
             self.flag_damage = True
             aizen_music.play()
         if key[self.control[0]] and not self.anime_ult and not self.anime_atk and not self.anime_atk2:
-            self.rect.x += 4
-            self.anime_idle = False
-            if not self.anime_atk and not self.anime_ult and not self.form:
-                self.anime_run = True
+            if self.form:
+                self.anime_run = False
+            else:
+                self.rect.x += 4
+                self.anime_idle = False
+                if not self.anime_atk and not self.anime_ult and not self.form:
+                    self.anime_run = True
         elif key[self.control[1]] and not self.anime_ult and not self.anime_atk and not self.anime_atk2:
-            self.rect.x -= 4
-            self.anime_idle = False
-            if not self.anime_atk and not self.anime_ult and not self.form:
-                self.anime_run = True
+            if self.form:
+                self.anime_run = False
+            else:
+                self.rect.x -= 4
+                self.anime_idle = False
+                if not self.anime_atk and not self.anime_ult and not self.form:
+                    self.anime_run = True
         else:
             if not self.anime_atk and not self.anime_atk2 and not self.anime_ult and not self.form:
                 self.anime_idle = True
@@ -792,14 +798,14 @@ class Sakura(pygame.sprite.Sprite):
 class BankaiGIN(pygame.sprite.Sprite):
     def __init__(self, image, pos):
         pygame.sprite.Sprite.__init__(self)
-        self.image = image
+        self.image = image[0]
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
         self.dir = ""
     def update(self):
         #if player1.dir == "right":
-        self.rect.x += 50
+        self.rect.x += 10
         #    self.dir = player1.dir
         #elif player1.dir == "left":
         #    self.rect.x -= 10
@@ -810,7 +816,8 @@ class BankaiGIN(pygame.sprite.Sprite):
         for i in self.mask_outline:
             self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
         if len(set(self.mask_list) & set(player2.mask_list)) > 0:
-            player2.hp -= 30
+            player2.hp -= 0.8
+            self.flag_damage = False
         #try:
         #    if self.dir == "right":
         #        self.image = self.image[0]
@@ -823,7 +830,7 @@ class BankaiGIN(pygame.sprite.Sprite):
 class Korobka(pygame.sprite.Sprite):
     def __init__(self, image, pos):
         pygame.sprite.Sprite.__init__(self)
-        self.image = image
+        self.image = image[0]
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
@@ -835,9 +842,13 @@ class Korobka(pygame.sprite.Sprite):
         global player1
         if player1.form:
             self.timer_anime += 1
-            if self.timer_anime / FPS > 0.3:
-                    self.kill()
+            if self.timer_anime / FPS > 0.1:
+                if self.frame == len(korobka_image) - 1:
+                    self.frame = 0
                     player1.form = False
+                else:
+                    self.frame += 1
+                self.timer_anime = 0
             try:
                 self.image = korobka_image[self.frame]
             except:
@@ -852,7 +863,7 @@ class Korobka(pygame.sprite.Sprite):
         for i in self.mask_outline:
             self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
         if len(set(self.mask_list) & set(player2.mask_list)) > 0:
-            player2.hp -= 0.1
+            player2.hp -= 0.05
 
 
 #class FON:
@@ -1011,18 +1022,6 @@ def restart():
         player2 = Player3(player3_idle_image, (1000, HEIGHT - 40))
         player2_group.add(player2)
 
-#def shake():
-#    global WIDTH, HEIGHT
-#    for i in range(40):
-#        WIDTH += random.randint(10, 100)
-#        HEIGHT += random.randint(10, 100)
-#        pygame.display.set_mode((WIDTH, HEIGHT))
-#        WIDTH -= random.randint(10, 100)
-#        HEIGHT -= random.randint(10, 100)
-#        pygame.display.set_mode((WIDTH, HEIGHT))
-#    WIDTH = 1200
-#    HEIGHT = 600
-#    pygame.display.set_mode((WIDTH, HEIGHT))
 
 restart()
 
