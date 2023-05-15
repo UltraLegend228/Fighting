@@ -65,6 +65,12 @@ player2_atk_image = [pygame.image.load("image/byakuya/11 run.png").convert_alpha
                      pygame.image.load("image/byakuya/15 atk.png").convert_alpha(),
                      pygame.image.load("image/byakuya/16 atk.png").convert_alpha()]
 
+player2_death_image = [pygame.image.load("image/byakuya/death1.png").convert_alpha(),
+                       pygame.image.load("image/byakuya/death2.png").convert_alpha(),
+                       pygame.image.load("image/byakuya/death3.png").convert_alpha(),
+                       pygame.image.load("image/byakuya/death4.png").convert_alpha(),
+                       pygame.image.load("image/byakuya/death5.png").convert_alpha(),
+                       pygame.image.load("image/byakuya/death6.png").convert_alpha()]
 player2_ult_image = [pygame.image.load("image/byakuya/11 ult.png").convert_alpha(),
                      pygame.image.load("image/byakuya/12 ult.png").convert_alpha(),
                      pygame.image.load("image/byakuya/13 ult.png").convert_alpha(),
