@@ -84,7 +84,7 @@ player1_idle_image = [pygame.image.load("image/aizen/1.png").convert_alpha(),
                       pygame.image.load("image/aizen/3.png").convert_alpha(),
                       pygame.image.load("image/aizen/4.png").convert_alpha()]
 
-player1_form_image = [pygame.image.load("image/aizen/1 form.png"),                      pygame.image.load("image/aizen/2 form.png"),
+player1_form_image = [pygame.image.load("image/aizen/2 form.png"),
                       pygame.image.load("image/aizen/3 form.png"),                      pygame.image.load("image/aizen/4 form.png")]
 
 player1_run_image = [pygame.image.load("image/aizen/1 run.png").convert_alpha(),
@@ -147,14 +147,9 @@ BANKAI_image = pygame.image.load("image/menu/BANKAI 2.png").convert_alpha()
 help_image = pygame.image.load("image/menu/help.png").convert_alpha()
 help2_image = pygame.image.load("image/menu/help 2.png").convert_alpha()
 
-bankaiGIN_image = [pygame.image.load("image/gin/kartoshka.png").convert_alpha(),
-                   pygame.image.load("image/gin/kGIN 2.png").convert_alpha()]
+bankaiGIN_image = pygame.image.load("image/gin/kartoshka.png").convert_alpha()
 
-korobka_image = [pygame.image.load("image/aizen/korobka 3.png").convert_alpha(),
-                 pygame.image.load("image/aizen/korobka 4.png").convert_alpha(),
-                 pygame.image.load("image/aizen/korobka 5.png").convert_alpha(),
-                 pygame.image.load("image/aizen/korobka 6.png").convert_alpha(),
-                 pygame.image.load("image/aizen/korobka 7.png").convert_alpha()]
+korobka_image = pygame.image.load("image/aizen/korobka 3.png").convert_alpha()
 
 sakura_image = pygame.image.load("image/byakuya/sakura.png").convert_alpha()
 shop_image = pygame.image.load("image/menu/shop.png").convert_alpha()
