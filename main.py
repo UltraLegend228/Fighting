@@ -306,7 +306,7 @@ class Player1(pygame.sprite.Sprite):
             if self.dir == "right":
                 self.image = self.image
             else:
-                self.image = pygame.transform.flip(self.image, True, False)
+                self.image = pygame.transform.flip(self.image, False, False)
         except:
             self.frame = 0
 
@@ -551,7 +551,7 @@ class Player2(pygame.sprite.Sprite):
             if self.dir == "right":
                 self.image = self.image
             else:
-                self.image = pygame.transform.flip(self.image, True, False)
+                self.image = pygame.transform.flip(self.image, False, False)
         except:
             self.frame = 0
 
@@ -768,7 +768,7 @@ class Player3(pygame.sprite.Sprite):
             if self.dir == "right":
                 self.image = self.image
             else:
-                self.image = pygame.transform.flip(self.image, True, False)
+                self.image = pygame.transform.flip(self.image, False, False)
         except:
             self.frame = 0
 
