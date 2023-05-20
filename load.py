@@ -51,6 +51,8 @@ player3_ult_image = [pygame.image.load("image/gin/ginult1.png").convert_alpha(),
                      pygame.image.load("image/gin/ginult7.png").convert_alpha(),
                      pygame.image.load("image/gin/ginult7.png").convert_alpha()]
 
+player3_block_image = pygame.image.load("image/gin/block1.png").convert_alpha()
+
 player2_run_image = [pygame.image.load("image/byakuya/11 run.png").convert_alpha(),
                      pygame.image.load("image/byakuya/12 run.png").convert_alpha(),
                      pygame.image.load("image/byakuya/13 run.png").convert_alpha(),
@@ -71,6 +73,7 @@ player2_death_image = [pygame.image.load("image/byakuya/death1.png").convert_alp
                        pygame.image.load("image/byakuya/death4.png").convert_alpha(),
                        pygame.image.load("image/byakuya/death5.png").convert_alpha(),
                        pygame.image.load("image/byakuya/death6.png").convert_alpha()]
+
 player2_ult_image = [pygame.image.load("image/byakuya/11 ult.png").convert_alpha(),
                      pygame.image.load("image/byakuya/12 ult.png").convert_alpha(),
                      pygame.image.load("image/byakuya/13 ult.png").convert_alpha(),
@@ -89,6 +92,8 @@ player2_atk2_image = [pygame.image.load("image/byakuya/2 atk 11.png").convert_al
                      pygame.image.load("image/byakuya/2 atk 17.png").convert_alpha(),
                      pygame.image.load("image/byakuya/2 atk 18.png").convert_alpha(),
                      pygame.image.load("image/byakuya/2 atk 19.png").convert_alpha()]
+
+player2_block_image = pygame.image.load("image/byakuya/block3.png").convert_alpha()
 
 player1_idle_image = [pygame.image.load("image/aizen/1.png").convert_alpha(),
                       pygame.image.load("image/aizen/2.png").convert_alpha(),
@@ -136,6 +141,8 @@ player1_death_image = [pygame.image.load("image/aizen/death1.png").convert_alpha
                        pygame.image.load("image/aizen/death3.png").convert_alpha(),
                        pygame.image.load("image/aizen/death4.png").convert_alpha(),
                        pygame.image.load("image/aizen/death5.png").convert_alpha()]
+
+player1_block_image = pygame.image.load("image/aizen/block1.png").convert_alpha()
 
 bg_image = [pygame.image.load("image/fon/1.jpg").convert_alpha(),
             pygame.image.load("image/fon/2.jpg").convert_alpha(),
