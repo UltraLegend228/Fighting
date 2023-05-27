@@ -185,4 +185,5 @@ control_q_image = pygame.image.load("image/menu/q.png").convert_alpha()
 control_m_image = pygame.image.load("image/menu/m.png").convert_alpha()
 control_n_image = pygame.image.load("image/menu/n.png").convert_alpha()
 control_back_image = pygame.image.load("image/menu/back.png").convert_alpha()
-
+GameOver228 = pygame.image.load("image/menu/Its Over.jpg").convert_alpha()
+menuGAMEOVER = pygame.image.load("image/menu/menuButton.png").convert_alpha()

@@ -31,7 +31,7 @@ def startMenu():
     global lvl
     sc.blit(menu_image, (0, 0))
     sc.blit(start_image, (100, 100))
-    sc.blit(aizen_menu2_image, (670, 200))
+    sc.blit(aizen_menu2_image, (550, 200))
     sc.blit(bleach_image, (500, -100))
     sc.blit(help_image, (100, 400))
     #sc.blit(records_image, (100, 300))
@@ -70,6 +70,7 @@ def startMenu():
 
 
 def game_lvl():
+    global lvl
     #sc.fill("grey")
     sc.blit(fon, (0, 0))
     player1_group.update()
@@ -82,6 +83,8 @@ def game_lvl():
     korobka_group.draw(sc)
     bankaiGIN_group.update()
     bankaiGIN_group.draw(sc)
+    if player1.hp <= 0 or player2.hp <= 0:
+        lvl = "GameOver"
     pygame.display.update()
 
 
@@ -114,8 +117,9 @@ class Player1(pygame.sprite.Sprite):
         self.form = False
         self.death = False
         self.block = False
+
     def update(self):
-        global FPS, player1, player2, p1, p2, Korobka
+        global FPS, player1, player2, p1, p2, Korobka, lvl
         key = pygame.key.get_pressed()
         if p1 == "aizen":
             self.control = [
@@ -307,13 +311,22 @@ class Player1(pygame.sprite.Sprite):
             self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
         if len(set(self.mask_list) & set(player2.mask_list)) > 0:
             if self.anime_atk and self.flag_damage:
-                player2.hp -= 5
-                self.ulta += 5
-                self.flag_damage = False
+                if player2.block == False:
+                    player2.hp -= 5
+                    self.ulta += 5
+                    self.flag_damage = False
+                else:
+                    self.ulta += 3
+                    self.flag_damage = False
             if self.anime_atk2 and self.flag_damage:
-                player2.hp -= 7
-                self.ulta += 5
-                self.flag_damage = False
+                if player2.block == False:
+                    player2.hp -= 7
+                    self.ulta += 5
+                    self.flag_damage = False
+                else:
+                    player1.hp -= 3.5
+                    self.ulta += 3
+                    self.flag_damage = False
         #for point in self.mask_list:
         #    x = point[0]
         #    y = point[1]
@@ -373,7 +386,7 @@ class Player1(pygame.sprite.Sprite):
             korobka = Korobka(korobka_image, (600, 100))
             korobka_group.add(korobka)
 
-        if self.death == False:
+        if self.death == False and self.block == False:
             if self.rect.center[0] - player2.rect.center[0] < 0:
                 self.dir = "right"
             else:
@@ -381,12 +394,30 @@ class Player1(pygame.sprite.Sprite):
         else:
             self.dir = "right"
 
-        if self.death == False:
+        if self.death == False and self.block == False:
             try:
                 if self.dir == "right":
                     self.image = self.image
                 else:
                     self.image = pygame.transform.flip(self.image, True, False)
+
+            except:
+                self.frame = 0
+
+        if self.block:
+            if self.rect.center[0] - player2.rect.center[0] < 0:
+                self.dir = "right"
+            else:
+                self.dir = "left"
+        else:
+            self.dir = "right"
+
+        if self.block:
+            try:
+                if self.dir == "right":
+                    self.image = player1_block_image
+                else:
+                    self.image = pygame.transform.flip(player1_block_image, True, False)
 
             except:
                 self.frame = 0
@@ -418,7 +449,7 @@ class Player2(pygame.sprite.Sprite):
         self.ulta = 0
         self.form = False
         self.death = False
-        self.block = True
+        self.block = False
 
 
     def update(self):
@@ -453,7 +484,7 @@ class Player2(pygame.sprite.Sprite):
             self.anime_atk = True
             self.block = False
             self.flag_damage = True
-        if key[self.control[5]] and not self.anime_atk and not self.anime_atk2:
+        if key[self.control[5]] and not self.anime_atk and not self.anime_atk2 and not self.death:
             self.frame = 0
             self.anime_idle = False
             self.anime_run = False
@@ -488,10 +519,18 @@ class Player2(pygame.sprite.Sprite):
                 self.block = False
                 self.anime_run = True
         else:
-            if not self.anime_atk and not self.anime_ult and not self.anime_atk2 and not self.block:
+            if not self.anime_atk and not self.anime_ult and not self.anime_atk2 and not self.block and not self.death:
                 self.anime_idle = True
             self.anime_run = False
 
+        if self.hp <= 0 and not self.anime_ult and not self.anime_atk and not self.anime_atk2 and not self.anime_run and not self.jump and not self.death:
+            self.anime_death = True
+            self.anime_atk = False
+            self.anime_atk2 = False
+            self.anime_idle = False
+            self.anime_run = False
+            self.anime_ult = False
+            self.jump = False
 
         if self.anime_idle:
             self.timer_anime += 1
@@ -675,6 +714,24 @@ class Player2(pygame.sprite.Sprite):
             except:
                 self.frame = 0
 
+        if self.block:
+            if self.rect.center[0] - player1.rect.center[0] < 0:
+                self.dir = "right"
+            else:
+                self.dir = "left"
+        else:
+            self.dir = "right"
+
+        if self.block:
+            try:
+                if self.dir == "right":
+                    self.image = player2_block_image
+                else:
+                    self.image = pygame.transform.flip(player2_block_image, True, False)
+
+            except:
+                self.frame = 0
+
 
 class Player3(pygame.sprite.Sprite):
     def __init__(self, image, pos):
@@ -693,14 +750,16 @@ class Player3(pygame.sprite.Sprite):
         self.anime_atk2 = False
         self.anime_ult = False
         self.anime_form = False
+        self.anime_death = False
         self.dir = "left"
-        self.hp = 100
+        self.hp = 1
         self.flag_damage = False
         self.hp_bar = "green"
         self.mask_list = []
         self.ulta = 75
         self.form = False
-        self.block = True
+        self.death = False
+        self.block = False
 
 
     def update(self):
@@ -728,44 +787,60 @@ class Player3(pygame.sprite.Sprite):
 
         if key[self.control[3]]:
             self.jump = True
-        if key[self.control[2]] and not self.anime_atk and not self.anime_atk2:
+        if key[self.control[2]] and not self.anime_atk and not self.anime_atk2 and not self.death:
             self.frame = 0
             self.anime_idle = False
             self.anime_run = False
             self.anime_atk = True
+            self.block = False
             self.flag_damage = True
-        if key[self.control[5]] and not self.anime_atk and not self.anime_atk2:
+        if key[self.control[5]] and not self.anime_atk and not self.anime_atk2 and not self.death:
             self.frame = 0
             self.anime_idle = False
             self.anime_run = False
             self.anime_atk2 = True
+            self.block = False
             self.flag_damage = True
-        if key[self.control[4]] and self.ulta >= 75 and not self.anime_ult and not self.form:
+        if key[self.control[4]] and self.ulta >= 75 and not self.anime_ult and not self.form and not self.death:
             self.frame = 0
             self.anime_idle = False
             self.anime_run = False
             self.anime_atk = False
             self.anime_ult = True
+            self.block = False
             self.flag_damage = True
             gin_music.play()
         if key[self.control[6]] and self.anime_idle and not self.anime_atk and not self.anime_atk2 and not self.form and not self.death:
             self.image = player3_block_image
             self.block = True
             self.anime_idle = False
-        if key[self.control[0]] and not self.anime_ult and not self.anime_atk and not self.anime_atk2:
+        if key[self.control[0]] and not self.anime_ult and not self.anime_atk and not self.anime_atk2 and not self.death:
             self.rect.x += 6
             self.anime_idle = False
+            self.block = False
             if not self.anime_atk:
+                self.block = False
                 self.anime_run = True
-        elif key[self.control[1]] and not self.anime_ult and not self.anime_atk and not self.anime_atk2:
+        elif key[self.control[1]] and not self.anime_ult and not self.anime_atk and not self.anime_atk2 and not self.death:
             self.rect.x -= 6
             self.anime_idle = False
+            self.block = False
             if not self.anime_atk:
+                self.block = False
                 self.anime_run = True
         else:
-            if not self.anime_atk and not self.anime_ult and not self.anime_atk2:
+            if not self.anime_atk and not self.anime_ult and not self.anime_atk2 and not self.block and not self.death:
                 self.anime_idle = True
             self.anime_run = False
+
+        if self.hp <= 0 and not self.anime_ult and not self.anime_atk and not self.anime_atk2 and not self.anime_run and not self.jump and not self.death:
+            self.anime_death = True
+            self.anime_atk = False
+            self.anime_atk2 = False
+            self.anime_idle = False
+            self.anime_run = False
+            self.anime_ult = False
+            self.jump = False
 
         if self.anime_idle:
             self.timer_anime += 1
@@ -828,7 +903,7 @@ class Player3(pygame.sprite.Sprite):
                 self.image = player3_atk2_image[self.frame]
             except:
                 self.frame = 0
-#
+
         if self.anime_ult:
             self.timer_anime += 1
             sc.blit(gin_menu_image, (300, 200))
@@ -856,6 +931,26 @@ class Player3(pygame.sprite.Sprite):
                 self.jump = False
                 self.jump_step = -22
 
+        if self.anime_death and self.death == False:
+            self.timer_anime += 1
+            if self.timer_anime / FPS > 0.1:
+                if self.frame == len(player3_death_image) - 1:
+                    self.death = True
+                    self.anime_death = False
+                    self.anime_atk = False
+                    self.anime_atk2 = False
+                    self.anime_idle = False
+                    self.anime_run = False
+                    self.anime_ult = False
+                    self.jump = False
+                else:
+                    self.frame += 1
+                    self.timer_anime = 0
+            try:
+                self.image = player3_death_image[self.frame]
+            except:
+                self.frame = 0
+
 
         self.mask = pygame.mask.from_surface(self.image)
         self.mask_outline = self.mask.outline()
@@ -864,13 +959,22 @@ class Player3(pygame.sprite.Sprite):
             self.mask_list.append((i[0] + self.rect.x, i[1] + self.rect.y))
         if len(set(self.mask_list) & set(player2.mask_list)) > 0:
             if self.anime_atk and self.flag_damage:
-                player2.hp -= 4
-                self.ulta += 5
-                self.flag_damage = False
+                if player2.block == False:
+                    player2.hp -= 4
+                    self.ulta += 5
+                    self.flag_damage = False
+                else:
+                    self.ulta += 3
+                    self.flag_damage = False
             if self.anime_atk2 and self.flag_damage:
-                player2.hp -= 7
-                self.ulta += 5
-                self.flag_damage = False
+                if player2.block == False:
+                    player2.hp -= 7
+                    self.ulta += 5
+                    self.flag_damage = False
+                else:
+                    player1.hp -= 3.5
+                    self.ulta += 3
+                    self.flag_damage = False
 
         pygame.draw.rect(sc, self.hp_bar, (0, 0, 600 * self.hp / 100, 50))
 
@@ -880,24 +984,43 @@ class Player3(pygame.sprite.Sprite):
             pygame.draw.rect(sc, (0, 191, 255), (0, 50, 150, 30))
             sc.blit(BANKAI_image, (65, 55))
 
-        if self.hp <= 0:
-            self.kill()
-
-        if self.rect.center[0] - player2.rect.center[0] < 0:
-            self.dir = "right"
-        else:
-            self.dir = "left"
-
-        try:
-            if self.dir == "right":
-                self.image = self.image
+        if not self.death:
+            if self.rect.center[0] - player2.rect.center[0] < 0:
+                self.dir = "right"
             else:
-                self.image = pygame.transform.flip(self.image, True, False)
-        except:
-            self.frame = 0
+                self.dir = "left"
+        else:
+            self.dir = "right"
+        if not self.death:
+            try:
+                if self.dir == "right":
+                    self.image = self.image
+                else:
+                    self.image = pygame.transform.flip(self.image, True, False)
+            except:
+                self.frame = 0
 
         if self.ulta < 75:
             self.anime_ult = False
+
+
+        if self.block:
+            if self.rect.center[0] - player2.rect.center[0] < 0:
+                self.dir = "right"
+            else:
+                self.dir = "left"
+        else:
+            self.dir = "right"
+
+        if self.block:
+            try:
+                if self.dir == "right":
+                    self.image = player3_block_image
+                else:
+                    self.image = pygame.transform.flip(player3_block_image, True, False)
+
+            except:
+                self.frame = 0
 
 
 class Sakura(pygame.sprite.Sprite):
@@ -1089,6 +1212,18 @@ def select():
         sc.blit(player3_idle_image[0], (950, 220))
     pygame.display.update()
 
+def GameOver():
+    global lvl
+    sc.blit(GameOver228, (0, 0))
+    sc.blit(menuGAMEOVER, (10, 10))
+    pos_mouse = pygame.mouse.get_pos()
+    if pygame.mouse.get_pressed()[0]:
+        if 0<pos_mouse[0]<50:
+            if 0 < pos_mouse[0] < 50:
+                restart()
+                lvl = "menu"
+    pygame.display.update()
+
 def restart():
     global player1, player1_group, player2, player2_group
     global korobka_group, sakura_group, bankaiGIN_group
@@ -1156,11 +1291,12 @@ while True:
             sys.exit()
     if lvl == "Game":
         game_lvl()
-
     elif lvl == "menu":
         startMenu()
     elif lvl == "Help":
         help()
     elif lvl == "Select":
         select()
+    elif lvl == "GameOver":
+        GameOver()
     clock.tick(FPS)
